@@ -1,0 +1,72 @@
+export type Priority = 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
+export type TodoStatus = 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
+export type Theme = 'light' | 'dark';
+
+export interface User {
+  name: string;
+  email: string;
+}
+
+export interface Todo {
+  id: number;
+  title: string;
+  description?: string;
+  notes?: string;
+  refLink?: string;
+  startDate?: string;
+  endDate?: string;
+  startTime?: string;
+  endTime?: string;
+  priority: Priority;
+  status: TodoStatus;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TodoRequest {
+  title: string;
+  description?: string;
+  notes?: string;
+  refLink?: string;
+  startDate?: string;
+  endDate?: string;
+  startTime?: string;
+  endTime?: string;
+  priority: Priority;
+  status: TodoStatus;
+  tags: string[];
+}
+
+export interface TodoFilterRequest {
+  search?: string;
+  status?: TodoStatus;
+  priority?: Priority;
+  tag?: string;
+  sortBy?: string;
+  sortDir?: 'asc' | 'desc';
+  page?: number;
+  size?: number;
+}
+
+export interface TodoStats {
+  total: number;
+  pending: number;
+  inProgress: number;
+  completed: number;
+  cancelled: number;
+}
+
+export interface ApiResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+}
+
+export interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+}
