@@ -19,17 +19,17 @@ import {
 } from "@react-navigation/native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-import { useAppDispatch, useAppSelector } from "../store";
+import { useAppDispatch, useAppSelector } from "../lib/store";
 import {
   fetchTodos,
   fetchStats,
   fetchTags,
   updateTodo,
   deleteTodo,
-} from "../store/features/todos/todo.slice";
-import { useColors } from "../hooks/useColors";
+} from "../lib/todo.slice";
+import { useColors } from "../hooks/useColor";
 import { PRIORITY_CONFIG, STATUS_CONFIG } from "../constants";
-import TodoFormModal from "../components/TodoFormModal";
+import TodoFormModal from "@/components/Todo.modal";
 import type { Todo, TodoRequest, RootStackParamList } from "../types";
 
 type DetailRoute = RouteProp<RootStackParamList, "TodoDetail">;
@@ -662,7 +662,7 @@ export default function TodoDetailScreen() {
 }
 
 const styles = (
-  colors: ReturnType<typeof import("../hooks/useColors").useColors>,
+  colors: ReturnType<typeof import("../hooks/useColor").useColors>,
 ) =>
   StyleSheet.create({
     container: { flex: 1, backgroundColor: colors.background },
