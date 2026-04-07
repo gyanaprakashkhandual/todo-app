@@ -1,6 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { API_CONFIG, TOKEN_KEY } from '../configs/config';
-import type { ApiResponse } from '../types';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_CONFIG, TOKEN_KEY } from "../config/config";
+import type { ApiResponse } from "../types";
 
 class ApiClient {
   private baseUrl: string;
@@ -18,34 +18,41 @@ class ApiClient {
   }
 
   private async getHeaders(includeAuth = true): Promise<HeadersInit> {
-    const headers: HeadersInit = { 'Content-Type': 'application/json' };
+    const headers: HeadersInit = { "Content-Type": "application/json" };
     if (includeAuth) {
       const token = await this.getToken();
-      if (token) headers['Authorization'] = `Bearer ${token}`;
+      if (token) headers["Authorization"] = `Bearer ${token}`;
     }
     return headers;
   }
 
-  async get<T>(endpoint: string, params?: Record<string, string | number | boolean | undefined>): Promise<ApiResponse<T>> {
+  async get<T>(
+    endpoint: string,
+    params?: Record<string, string | number | boolean | undefined>,
+  ): Promise<ApiResponse<T>> {
     let url = `${this.baseUrl}${endpoint}`;
     if (params) {
       const query = Object.entries(params)
         .filter(([, v]) => v !== undefined)
         .map(([k, v]) => `${k}=${encodeURIComponent(String(v))}`)
-        .join('&');
+        .join("&");
       if (query) url += `?${query}`;
     }
     const headers = await this.getHeaders();
-    const res = await fetch(url, { method: 'GET', headers });
+    const res = await fetch(url, { method: "GET", headers });
     const data = await res.json();
     if (!res.ok) throw data;
     return data;
   }
 
-  async post<T>(endpoint: string, body: unknown, auth = true): Promise<ApiResponse<T>> {
+  async post<T>(
+    endpoint: string,
+    body: unknown,
+    auth = true,
+  ): Promise<ApiResponse<T>> {
     const headers = await this.getHeaders(auth);
     const res = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'POST',
+      method: "POST",
       headers,
       body: JSON.stringify(body),
     });
@@ -57,7 +64,7 @@ class ApiClient {
   async put<T>(endpoint: string, body: unknown): Promise<ApiResponse<T>> {
     const headers = await this.getHeaders();
     const res = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'PUT',
+      method: "PUT",
       headers,
       body: JSON.stringify(body),
     });
@@ -69,7 +76,7 @@ class ApiClient {
   async patch<T>(endpoint: string, body: unknown): Promise<ApiResponse<T>> {
     const headers = await this.getHeaders();
     const res = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers,
       body: JSON.stringify(body),
     });
@@ -81,10 +88,11 @@ class ApiClient {
   async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
     const headers = await this.getHeaders();
     const res = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers,
     });
-    if (res.status === 204) return { success: true, message: 'Deleted' } as ApiResponse<T>;
+    if (res.status === 204)
+      return { success: true, message: "Deleted" } as ApiResponse<T>;
     const data = await res.json();
     if (!res.ok) throw data;
     return data;

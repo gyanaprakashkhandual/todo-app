@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { TOKEN_KEY, USER_KEY } from '../configs/config';
-import type { User } from '../types';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { TOKEN_KEY, USER_KEY } from "../config/config";
+import type { User } from "../types";
 
 interface AuthContextType {
   user: User | null;
@@ -43,8 +43,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setTokenState(newToken);
     // Optionally decode JWT to get user info
     try {
-      const payload = JSON.parse(atob(newToken.split('.')[1]));
-      const userData: User = { name: payload.name || payload.sub || '', email: payload.email || payload.sub || '' };
+      const payload = JSON.parse(atob(newToken.split(".")[1]));
+      const userData: User = {
+        name: payload.name || payload.sub || "",
+        email: payload.email || payload.sub || "",
+      };
       await AsyncStorage.setItem(USER_KEY, JSON.stringify(userData));
       setUser(userData);
     } catch {
@@ -60,7 +63,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, token, isLoading, isAuthenticated: !!token, setToken, logout }}
+      value={{
+        user,
+        token,
+        isLoading,
+        isAuthenticated: !!token,
+        setToken,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>
@@ -69,6 +79,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used inside AuthProvider');
+  if (!ctx) throw new Error("useAuth must be used inside AuthProvider");
   return ctx;
 }

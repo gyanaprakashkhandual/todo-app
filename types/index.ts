@@ -1,6 +1,6 @@
-export type Priority = 'LOW' | 'MEDIUM' | 'HIGH' | 'URGENT';
-export type TodoStatus = 'PENDING' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED';
-export type Theme = 'light' | 'dark';
+export type Priority = "LOW" | "MEDIUM" | "HIGH" | "URGENT";
+export type TodoStatus = "PENDING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
+export type Theme = "light" | "dark";
 
 export interface User {
   name: string;
@@ -44,7 +44,7 @@ export interface TodoFilterRequest {
   priority?: Priority;
   tag?: string;
   sortBy?: string;
-  sortDir?: 'asc' | 'desc';
+  sortDir?: "asc" | "desc";
   page?: number;
   size?: number;
 }

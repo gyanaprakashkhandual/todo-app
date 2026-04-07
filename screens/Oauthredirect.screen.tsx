@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { useRoute, type RouteProp } from '@react-navigation/native';
 import { useAuth } from '../context/Auth.context';
-import { useColors } from '../hooks/useColors';
-import type { RootStackParamList } from '../types';
+import { useColors } from '@/hooks/useColor';
+import type { RootStackParamList } from '../types/index';
 
 type OAuthRoute = RouteProp<RootStackParamList, 'OAuthRedirect'>;
 
